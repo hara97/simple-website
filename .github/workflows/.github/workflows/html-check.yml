@@ -1,0 +1,25 @@
+name: CI - HTML Check
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # rulează în fiecare luni la 09:00 UTC
+  workflow_dispatch: # ca să îl poți rula manual
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Check HTML file exists
+      run: |
+        if [ -f index.html ]; then
+          echo "HTML file exists ✅"
+        else
+          echo "Missing HTML file ❌"
+          exit 1
+        fi
